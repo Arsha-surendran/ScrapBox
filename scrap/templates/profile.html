@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profiledetail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body{            background: linear-gradient(to bottom,#ebc9c9,#f6f4f2,#ebc9c9);
+
+
+}.avatar{border-radius:50%;width:150px;height:150px}.card-header,.btn-edit{background:#ed7f7f}
+    </style>
+</head>
+<body>
+    
+    <div class="container mt-1">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card mb-3 mt-3">
+                    <div class="card-header text-white text-center">
+                        <h2>Profile</h2>
+                    </div>
+                    <div class="card-body p-3">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="text-center mb-5">
+                                {%if data.profile_pic%}
+                                <img src="{{data.profile_pic.url}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+                            {%else%}
+                                <img src="{%static 'scrapboxx/images/profile.png'%}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            {%endif%}
+                            </div>
+                            
+                            <div class="mb-1">
+                                <label for="first_name" class="form-label"><h3>{{ data.first_name }} {{ data.last_name }}</h3></label>
+                                
+                            </div>
+                            <!-- <div class="row mt-3 d-flex justify-content-center bg-white rounded-3 border"></div> -->
+                            <!-- <div class="mb-1">
+                                <label for="last_name" class="form-label">Last Name:<h6</h6></label>
+                                
+                            </div> -->
+                            <div class="row mt-3 d-flex justify-content-center bg-white rounded-3 border"></div>
+                            <div class="mb-1">
+                                <label for="address" class="form-label">Address:<h6>{{ data.address }}</h6></label>
+
+                            </div>
+                            <div class="row mt-3 d-flex justify-content-center bg-white rounded-3 border"></div>
+                            <div class="mb-1">
+                                <label for="phone" class="form-label">Phone:<h6>{{ data.phone }}</h6></label>
+                             
+                            </div>
+                            <div class="row mt-3 d-flex justify-content-center bg-white rounded-3 border"></div>
+                            <div class="mb-1">
+                                <label for="email" class="form-label">Email:<h6>{{ user.email }}</h6></label>
+                            
+                            </div>
+                            <div class="text-center mt-3 text-white">
+                                <a href="{% url 'profile_edit' data.id %}" class="btn btn-edit">Edit Profile</a>
+                                
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h2 class="text-danger">My product</h2>
+        <div class="row mt-3 d-flex justify-content-center bg-white rounded-3 border">
+          <!-- card start -->
+        {%for product in data.user.scrap_user.all%}
+          <div class="col-md-4 col-lg-3 col-6">
+            <div id="product-1" class="single-product border rounded-3 mt-3" style="height: 33em; background-color: #eee;">
+                  <div class="part-1">
+                      <a href="{%url 'product_details' product.id%}">
+                        <img class="w-50 h-50 rounded-top-3" src="{{product.picture.url}}" alt="">
+                      </a>
+                      <ul>
+                          <li><a class="pop-btn" style="text-decoration: none; background-color: transparent; border: none; padding: 0;" href="{%url 'product_edit' product.id%}"><i class="fas fa-edit"></i></a></li>
+                          <li><a class="pop-btn" style="text-decoration: none; background-color: transparent; border: none; padding: 0;" href="{%url 'delete' product.id%}"><i class="fas fa-trash"></i></a></li>
+                      </ul>
+                  </div>
+                  <div class="part-2 p-3 d-flex flex-column">
+                      <h3 class="product-title">{{product.name}}</h3>
+                      <h4>{{product.description}}</h4>
+                      <h4 class="product-old-price">{{product.price}}</h4>
+                      <h4 class="fw-bold ">₹{{product.price}}</h4>
+                    
+                  </div>
+                  
+            </div>
+          </div>
+          {%endfor%}
+</body>
+</html>

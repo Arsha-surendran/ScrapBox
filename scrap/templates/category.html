@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a class="nav-link active" aria-current="page" href="{%url 'home'%}">
+        <button type="button" class="btn btn background-color:#faf9f8;">
+        <i class="fa-solid fa-house color:#faf9f8;"></i>
+      </button>
+      </a>
+    <form action="" method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">submit</button>
+    </form>
+</body>
+</html>
